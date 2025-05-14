@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jalumuru Hill Temples</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --gold: #D4AF37;
+            --gold-light: #FFD700;
+            --gold-dark: #996515;
+            --bg-color: #f9f5e9;
+            --text-color: #333;
+            --card-bg: #fff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1589998059171-988d887df646?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1476&q=80') no-repeat center center/cover;
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: linear-gradient(to bottom, transparent, var(--bg-color));
+        }
+
+        .logo {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--gold-light);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+        }
+
+        nav {
+            background-color: var(--gold-dark);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold-light);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+            color: var(--gold-dark);
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: var(--gold);
+            margin: 10px auto;
+        }
+
+        .intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            padding: 1rem;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .search-box {
+            display: flex;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 2px solid var(--gold);
+            border-radius: 30px 0 0 30px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .search-btn {
+            padding: 12px 20px;
+            background-color: var(--gold);
+            color: white;
+            border: none;
+            border-radius: 0 30px 30px 0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .search-btn:hover {
+            background-color: var(--gold-dark);
+        }
+
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            background-color: white;
+            border: 1px solid var(--gold);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--gold);
+            color: white;
+        }
+
+        .temple-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .temple-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+
+        .temple-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .temple-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 3px solid var(--gold);
+        }
+
+        .temple-content {
+            padding: 1.5rem;
+        }
+
+        .temple-name {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--gold-dark);
+            font-weight: 600;
+        }
+
+        .temple-detail {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .temple-detail i {
+            margin-right: 10px;
+            color: var(--gold);
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .temple-detail span {
+            flex: 1;
+        }
+
+        .no-image {
+            height: 200px;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #999;
+            font-size: 1.2rem;
+        }
+
+        footer {
+            background-color: var(--gold-dark);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        .social-links a {
+            color: white;
+            margin: 0 10px;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--gold-light);
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--gold);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+            }
+
+            .nav-links {
+                margin-top: 1rem;
+            }
+
+            .nav-links li {
+                margin-left: 1rem;
+                margin-right: 1rem;
+            }
+
+            header {
+                height: 50vh;
+            }
+
+            .logo {
+                font-size: 2rem;
+            }
+
+            .tagline {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .temple-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .search-box {
+                flex-direction: column;
+            }
+
+            .search-input {
+                border-radius: 30px;
+                margin-bottom: 10px;
+            }
+
+            .search-btn {
+                border-radius: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <i class="fas fa-om"></i> Jalumuru Hill Temples
+        </div>
+        <p class="tagline">Discover the divine beauty of 24 unique temple idols nestled on the sacred Jalumuru Hill</p>
+    </header>
+
+    <nav>
+        <div class="nav-container">
+            <div class="brand">
+                <a href="#" style="color: white; text-decoration: none; font-weight: bold;">Jalumuru Temples</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#temples">Temples</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container" id="home">
+        <section class="intro">
+            <h2>Welcome to Jalumuru Hill Temples</h2>
+            <p>Jalumuru Hill is a sacred site housing 24 magnificent temple idols, each with its own unique history and spiritual significance. These temples, donated by devotees from various villages and districts, create a divine atmosphere that attracts pilgrims and visitors from all over the region.</p>
+            <p>Explore our collection of temples below and discover the rich spiritual heritage of Jalumuru Hill.</p>
+        </section>
+    </div>
+
+    <div class="container" id="temples">
+        <h2 class="section-title">Our Divine Temples</h2>
+        
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="Search temples by name, donor, or district...">
+                <button class="search-btn"><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+
+       
+
+        <div class="temple-grid" id="temple-container">
+            <!-- Temple cards will be inserted here by JavaScript -->
+        </div>
+    </div>
+
+    <div class="container" id="about">
+        <h2 class="section-title">About Jalumuru Hill</h2>
+        <div class="intro">
+            <p>Jalumuru Hill is a spiritual haven located in the beautiful landscape of Andhra Pradesh. The hill is home to 24 unique temples, each representing different deities from the Hindu pantheon.</p>
+            <p>The temples were established through the devotion and contributions of individuals and families from various villages and districts. Each temple has its own story and significance, making Jalumuru Hill a truly special pilgrimage site.</p>
+            <p>Visitors to Jalumuru Hill can experience peace, tranquility, and spiritual rejuvenation while exploring these sacred temples surrounded by nature's beauty.</p>
+        </div>
+    </div>
+
+    <footer id="contact">
+        <div class="footer-content">
+            <h3>Jalumuru Hill Temples</h3>
+            <p>Discover the divine beauty of our sacred temples</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+            <p>&copy; 2025 Jalumuru Hill Temples. All rights reserved.</p>
+            <p>Contact: info@jalumuruhill@gmail.com | Phone: +91 83741 04423</p>
+        </div>
+    </footer>
+
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        // Temple data
+        const temples = [
+            {
+                id: 3,
+                image_url: "https://ice.lol/TsFhoL",
+                tname: "Sri Vara Siddhi Vinayak Temple",
+                donar: "Ch.nagraj, kumar, suresh, Santosh",
+                village: "Kushaiguda",
+                district: "Ranghareddy district",
+                ph_no: "Xxxxxxx99"
+            },
+            {
+                id: 4,
+                image_url: "https://ice.lol/IDkybJ",
+                tname: "Sri Naga Bandham",
+                donar: "Sridevi & Shyam",
+                village: "Jubli hills, Hyderabad",
+                district: "Hyderabad",
+                ph_no: "Xxxxxx3628"
+            },
+            {
+                id: 5,
+                image_url: "https://ice.lol/AeuXzv",
+                tname: "Sri Subhramanyaswara Swamy",
+                donar: "Dr.kishore & Dr Ramakrishna & subbarao",
+                village: "Tanaka, Hyderabad & kakinada",
+                district: "Tanaka, Hyderabad & kakinada",
+                ph_no: "Xxxxxx9026"
+            },
+            {
+                id: 6,
+                image_url: "https://ice.lol/UyCfJa",
+                tname: "Sri Maha Laxmi Devi Temple",
+                donar: "Janaki & B.vijayalaxmi",
+                village: "Hyderabad & srikakulam",
+                district: "Hyderabad",
+                ph_no: "Xxxxxx5482"
+            },
+            {
+                id: 7,
+                image_url: "https://ice.lol/YzDPbY",
+                tname: "Akhasa Lingam Temple",
+                donar: "Vg prakash, A.surender bharati, others",
+                village: "Filimcity hyderabad",
+                district: "Hyderabad",
+                ph_no: "Xxxxxx0199"
+            },
+            {
+                id: 8,
+                image_url: "https://ice.lol/bHTSyf",
+                tname: "Sri Abhayanenjaya Swamy Temple",
+                donar: "Murali (DT)",
+                village: "Narasannepeta",
+                district: "Srikakulam",
+                ph_no: "Xxxxxx0496"
+            },
+            {
+                id: 9,
+                image_url: "https://ice.lol/PPncWP",
+                tname: "Sri Navagrahas Temple",
+                donar: "Vg prakash",
+                village: "Filimcity hyderabad",
+                district: "Hyderabad",
+                ph_no: "Xxxxxx0199"
+            },
+            {
+                id: 10,
+                image_url: "https://ice.lol/NeWUHo",
+                tname: "Sri Saraswati Brahmma Temple",
+                donar: "Neredmet counsler, & Chandu Hyderabad",
+                village: "Hyderabad",
+                district: "Hyderabad",
+                ph_no: "Xxxxxx9999"
+            },
+            {
+                id: 11,
+                image_url: "https://ice.lol/MsHcXv",
+                tname: "Sri Chithraguptha Temple",
+                donar: "Suchithra",
+                village: "Pathabasthi, Hyderabad",
+                district: "Hyderabad",
+                ph_no: "Xxxxxx7373"
+            },
+            {
+                id: 12,
+                image_url: "https://ice.lol/vIsWKt",
+                tname: "Sri Laxmi Narasimha Swamy Temple",
+                donar: "Janaki",
+                village: "Hyderabad",
+                district: "Hyderabad",
+                ph_no: "Xxxxxx1332"
+            },
+            {
+                id: 13,
+                image_url: "https://ice.lol/dbqxBU",
+                tname: "Sri Gayathri Devi Temple",
+                donar: "Raju",
+                village: "Uppal",
+                district: "Hyderabad",
+                ph_no: "Xxxxxx7433"
+            },
+            {
+                id: 14,
+                image_url: "https://ice.lol/WukuRl",
+                tname: "Sri Rama Sathyanarayana Swamy Temple",
+                donar: "G.bhaskar",
+                village: "Lalapet",
+                district: "Secunderabad",
+                ph_no: "Xxxxxx1025"
+            },
+           
+            {
+                id: 16,
+                image_url: "https://ice.lol/JgcqME",
+                tname: "Sri Radha Venugopala Swamy Temple",
+                donar: "Vg prakash & Geetha",
+                village: "Filimcity",
+                district: "Hyderabad",
+                ph_no: "Xxxxxx0199"
+            },
+            {
+                id: 17,
+                image_url: "https://ice.lol/yOeakq",
+                tname: "Akhasa Lingam Temple (Nandi)",
+                donar: "B.Nandu & family",
+                village: "Jalumuru",
+                district: "Srikakulam",
+                ph_no: "Xxxxxx7421"
+            },
+            {
+                id: 18,
+                image_url: "",
+                tname: "Sri Venkateswara Swamy Temple",
+                donar: "Ch.Ramesh",
+                village: "Kusai guda",
+                district: "Hyderabad",
+                ph_no: "Xxxxxx3456"
+            },
+            
+            {
+                id: 20,
+                image_url: "https://ice.lol/rGKfjH",
+                tname: "Sri Maha Kali Temple",
+                donar: "Vijaya, geetha",
+                village: "Filimcity hyderabad",
+                district: "Hyderabad",
+                ph_no: "Xxxxx0199"
+            },
+            {
+                id: 22,
+                image_url: "https://ice.lol/mnJpkP",
+                tname: "Sri Vamanavathara Temple",
+                donar: "G.venkata ramana",
+                village: "Dhamnai guda",
+                district: "Hyderabad",
+                ph_no: "Xxxxxx2233"
+            },
+            {
+                id: 23,
+                image_url: "https://ice.lol/liPQnR",
+                tname: "Sri Dhattathreya Swamy Temple",
+                donar: "Venkata Ramana friends",
+                village: "Hyderabad",
+                district: "Hyderabad",
+                ph_no: "Xxxxxx6633"
+            },
+            {
+                id: 24,
+                image_url: "https://ice.lol/ACCDAB",
+                tname: "Srivari Padhalu Temple",
+                donar: "Vg prakash",
+                village: "Filimcity",
+                district: "Hyderabad",
+                ph_no: "Xxxxxx0199"
+            },
+          
+        ];
+
+        // Function to create temple cards
+        function createTempleCards(filteredTemples = temples) {
+            const container = document.getElementById('temple-container');
+            container.innerHTML = '';
+
+            filteredTemples.forEach(temple => {
+                const card = document.createElement('div');
+                card.className = 'temple-card';
+                card.setAttribute('data-district', temple.district);
+
+                let imageContent;
+                if (temple.image_url) {
+                    imageContent = `<img src="${temple.image_url}" alt="${temple.tname}" class="temple-img" loading="lazy">`;
+                } else {
+                    imageContent = `<div class="no-image"><i class="fas fa-image"></i> Image not available</div>`;
+                }
+
+                card.innerHTML = `
+                    ${imageContent}
+                    <div class="temple-content">
+                        <h3 class="temple-name">${temple.tname}</h3>
+                        <div class="temple-detail">
+                            <i class="fas fa-user"></i>
+                            <span><strong>Donor(s):</strong> ${temple.donar}</span>
+                        </div>
+                        <div class="temple-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span><strong>Village:</strong> ${temple.village}</span>
+                        </div>
+                        <div class="temple-detail">
+                            <i class="fas fa-globe"></i>
+                            <span><strong>District:</strong> ${temple.district}</span>
+                        </div>
+                        <div class="temple-detail">
+                            <i class="fas fa-phone"></i>
+                            <span><strong>Phone:</strong> ${temple.ph_no}</span>
+                        </div>
+                    </div>
+                `;
+
+                container.appendChild(card);
+            });
+        }
+
+        // Initial load
+        document.addEventListener('DOMContentLoaded', () => {
+            createTempleCards();
+
+            // Search functionality
+            const searchInput = document.querySelector('.search-input');
+            searchInput.addEventListener('input', () => {
+                const searchTerm = searchInput.value.toLowerCase();
+                const filteredTemples = temples.filter(temple => 
+                    temple.tname.toLowerCase().includes(searchTerm) ||
+                    temple.donar.toLowerCase().includes(searchTerm) ||
+                    temple.district.toLowerCase().includes(searchTerm) ||
+                    temple.village.toLowerCase().includes(searchTerm)
+                );
+                createTempleCards(filteredTemples);
+            });
+
+            // Filter functionality
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    button.classList.add('active');
+
+                    const filterValue = button.getAttribute('data-filter');
+                    if (filterValue === 'all') {
+                        createTempleCards();
+                    } else {
+                        const filteredTemples = temples.filter(temple => 
+                            temple.district.includes(filterValue)
+                        );
+                        createTempleCards(filteredTemples);
+                    }
+                });
+            });
+
+            // Back to top button
+            const backToTopButton = document.getElementById('backToTop');
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.add('visible');
+                } else {
+                    backToTopButton.classList.remove('visible');
+                }
+            });
+
+            backToTopButton.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
